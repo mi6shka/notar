@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Переписка и нотариальный осмотр</title>
+
+<style>
+:root {
+  --lav: #F3F1FF;
+  --text: #202124;
+  --muted: #55505f;
+  --border: #b8b2cc;
+  --accent: #716a83;
+  --white: #fff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 24px;
+  background: #fff;
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.55;
+}
+
+.interactive {
+  max-width: 760px;
+  margin: 0 auto;
+  perspective: 1200px;
+}
+
+.card {
+  border: 1px solid #d1cce2;
+  border-radius: 18px;
+  padding: 26px;
+  background: var(--lav);
+  transform-origin: center;
+  animation: turn .28s ease;
+}
+
+.card.front {
+  background: #fff;
+}
+
+.kicker {
+  margin: 0 0 4px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+h2 {
+  margin: 0;
+  font-size: 26px;
+  line-height: 1.2;
+}
+
+h3 {
+  margin: 6px 0 0;
+  font-size: 22px;
+  line-height: 1.25;
+}
+
+p {
+  margin: 10px 0 0;
+}
+
+.intro {
+  font-size: 16px;
+}
+
+.choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.choice,
+.back {
+  min-height: 56px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  font-weight: 700;
+  text-align: left;
+}
+
+.choice {
+  padding: 15px 16px;
+  background: var(--lav);
+  font-size: 16px;
+}
+
+.choice:hover,
+.choice:focus-visible {
+  border-color: var(--accent);
+}
+
+.choice:focus-visible,
+.back:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.risk {
+  margin-top: 22px;
+  padding-left: 16px;
+  border-left: 4px solid var(--accent);
+}
+
+.risk-title,
+.section-title {
+  font-weight: 700;
+}
+
+.case {
+  margin-top: 12px;
+}
+
+.requisites {
+  margin-top: 10px;
+  color: #38333f;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.divider {
+  margin-top: 22px;
+  padding-top: 17px;
+  border-top: 1px solid var(--border);
+}
+
+.back {
+  margin-top: 22px;
+  padding: 11px 15px;
+  background: var(--white);
+  font-size: 15px;
+}
+
+@keyframes turn {
+  from {
+    opacity: .35;
+    transform: rotateY(8deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 14px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .choices {
+    grid-template-columns: 1fr;
+  }
+
+  h2 {
+    font-size: 23px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    animation: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<main class="interactive" id="interactive" aria-live="polite"></main>
+
+<script>
+const root = document.getElementById('interactive');
+
+const front = `
+<section class="card front">
+
+  <p class="kicker">Выберите свою ситуацию</p>
+
+  <h2>Переписку зафиксировали у нотариуса?</h2>
+
+  <p class="intro">
+    Нажмите на вариант, чтобы узнать о рисках.
+  </p>
+
+  <div class="choices">
+
+    <button
+      class="choice"
+      type="button"
+      data-view="no">
+      Нет, нотариального протокола нет
+    </button>
+
+    <button
+      class="choice"
+      type="button"
+      data-view="yes">
+      Да, переписку осмотрел нотариус
+    </button>
+
+  </div>
+
+</section>
+`;
+
+
+const no = `
+<section class="card">
+
+  <p class="kicker">
+    Нотариального протокола нет
+  </p>
+
+  <h3>
+    Есть два основных риска
+  </h3>
+
+  <div class="risk">
+
+    <div class="risk-title">
+      1. Исходные сообщения позднее не получится проверить
+    </div>
+
+    <p>
+      Можно потерять доступ к сервису, аккаунту или самим
+      сообщениям. Если останутся только изображения экрана,
+      суду может не хватить данных, чтобы проверить
+      доказательство.
+    </p>
+
+    <p class="case">
+      <strong>Из практики.</strong>
+      Суд признал фотографии экрана программы недопустимыми
+      доказательствами: на них не было даты и точного времени,
+      а проверить материалы непосредственно в программе уже
+      было невозможно, поскольку сервис Canva закрыл доступ
+      для пользователей из России.
+    </p>
+
+    <p class="requisites">
+      Постановление Тринадцатого ААС от 25.06.2024
+      по делу № А56-93605/2023
+    </p>
+
+  </div>
+
+
+  <div class="risk">
+
+    <div class="risk-title">
+      2. Оппонент заявит, что переписку изменили
+    </div>
+
+    <p>
+      Оппонент может сослаться на правки и потребовать
+      исключить скриншоты из доказательств. Если первоначальный
+      вид сообщений нельзя проверить, такой довод создает
+      дополнительный риск.
+    </p>
+
+    <p class="case">
+      <strong>Из практики.</strong>
+      Суд не принял скриншоты переписки, поскольку отсутствие
+      нотариального заверения не позволяло убедиться, что
+      сообщения представлены в первоначальном виде и их
+      не корректировали.
+    </p>
+
+    <p class="requisites">
+      Решение Первомайского районного суда г. Владивостока
+      от 27.08.2025 по делу № 12-93/2025
+    </p>
+
+  </div>
+
+
+  <div class="divider">
+
+    <div class="section-title">
+      Что сделать
+    </div>
+
+    <p>
+      Если исходная переписка еще доступна, зафиксируйте ее
+      заранее. Нотариальный осмотр поможет сохранить содержание
+      сообщений и снизить риск спора об их первоначальном виде.
+    </p>
+
+  </div>
+
+  <button class="back" type="button">
+    ← Вернуться к выбору
+  </button>
+
+</section>
+`;
+
+
+const yes = `
+<section class="card">
+
+  <p class="kicker">
+    Нотариальный протокол есть
+  </p>
+
+  <h3>
+    Даже нотариальный осмотр может не помочь
+  </h3>
+
+  <p>
+    Нотариальный протокол подтверждает содержание
+    зафиксированной переписки, но сам по себе не доказывает,
+    что сторона надлежащим образом исполнила договор.
+  </p>
+
+  <div class="risk">
+
+    <div class="risk-title">
+      Когда возникнет проблема
+    </div>
+
+    <p>
+      Если из самих сообщений не следует нужный юридический
+      факт или сторона нарушила предусмотренный договором
+      порядок действий, нотариальная фиксация этого не исправит.
+    </p>
+
+  </div>
+
+
+  <div class="divider">
+
+    <div class="section-title">
+      Из практики
+    </div>
+
+    <p>
+      Покупатель утверждал, что вернул поставщику некачественный
+      товар, и представил нотариальный протокол осмотра смартфона
+      сотрудника с перепиской сторон. Однако переписка не
+      подтверждала фактический возврат товара, а установленную
+      договором процедуру его приемки и возврата покупатель
+      не соблюдал. Суды взыскали с него 1,67 млн руб.
+      задолженности.
+    </p>
+
+    <p class="requisites">
+      Постановление АС Северо-Западного округа от 24.06.2025
+      по делу № А56-82992/2023
+    </p>
+
+  </div>
+
+  <button class="back" type="button">
+    ← Вернуться к выбору
+  </button>
+
+</section>
+`;
+
+
+function render(html) {
+
+  root.innerHTML = html;
+
+  root.querySelectorAll('[data-view]').forEach(button => {
+
+    button.addEventListener('click', () => {
+
+      if (button.dataset.view === 'no') {
+        render(no);
+      } else {
+        render(yes);
+      }
+
+    });
+
+  });
+
+  const backButton = root.querySelector('.back');
+
+  if (backButton) {
+    backButton.addEventListener('click', () => {
+      render(front);
+    });
+  }
+
+}
+
+render(front);
+</script>
+
+</body>
+</html>
