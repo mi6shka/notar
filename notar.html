@@ -3,27 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>Переписка и нотариальный осмотр</title>
 
 <style>
-:root {
-  --lav: #F3F1FF;
-  --text: #202124;
-  --muted: #55505f;
-  --border: #b8b2cc;
-  --accent: #716a83;
-  --white: #fff;
-}
-
 * {
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
-  padding: 24px;
+  padding: 0;
+}
+
+body {
   background: #fff;
-  color: var(--text);
+  color: #36323c;
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.55;
 }
@@ -31,121 +27,143 @@ body {
 .interactive {
   max-width: 760px;
   margin: 0 auto;
-  perspective: 1200px;
 }
 
 .card {
-  border: 1px solid #d1cce2;
-  border-radius: 18px;
-  padding: 26px;
-  background: var(--lav);
-  transform-origin: center;
+  padding: 28px 30px;
+
+  background: #F7F5FF;
+  border: 1px solid #d8d3e8;
+  border-radius: 20px;
+
   animation: turn .28s ease;
 }
 
-.card.front {
-  background: #fff;
-}
-
 .kicker {
-  margin: 0 0 4px;
-  color: var(--muted);
-  font-size: 14px;
+  margin: 0 0 5px;
+
+  color: #625b9b;
+  font-size: 13px;
   font-weight: 700;
 }
 
 h2 {
   margin: 0;
-  font-size: 26px;
-  line-height: 1.2;
+
+  color: #625b9b;
+  font-size: 22px;
+  line-height: 1.3;
+  font-weight: 700;
 }
 
 h3 {
-  margin: 6px 0 0;
-  font-size: 22px;
-  line-height: 1.25;
+  margin: 5px 0 0;
+
+  color: #625b9b;
+  font-size: 20px;
+  line-height: 1.3;
+  font-weight: 700;
 }
 
 p {
   margin: 10px 0 0;
+
+  font-size: 15px;
+  line-height: 1.55;
 }
 
 .intro {
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .choices {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+
   margin-top: 22px;
 }
 
 button {
-  font: inherit;
+  font-family: Arial, Helvetica, sans-serif;
   cursor: pointer;
 }
 
-.choice,
-.back {
-  min-height: 56px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  color: var(--text);
-  font-weight: 700;
-  text-align: left;
-}
-
 .choice {
-  padding: 15px 16px;
-  background: var(--lav);
-  font-size: 16px;
+  min-height: 50px;
+  padding: 11px 17px;
+
+  border: 0;
+  border-radius: 25px;
+
+  background: #A49BFF;
+  color: #292733;
+
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+
+  transition: background-color .2s ease;
 }
 
-.choice:hover,
-.choice:focus-visible {
-  border-color: var(--accent);
+.choice:hover {
+  background: #968CF4;
 }
 
 .choice:focus-visible,
 .back:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  outline: 2px solid #625b9b;
+  outline-offset: 3px;
 }
 
 .risk {
-  margin-top: 22px;
-  padding-left: 16px;
-  border-left: 4px solid var(--accent);
+  margin-top: 21px;
+  padding-left: 15px;
+
+  border-left: 3px solid #8f87c7;
 }
 
 .risk-title,
 .section-title {
+  color: #36323c;
+  font-size: 15px;
   font-weight: 700;
 }
 
-.case {
-  margin-top: 12px;
-}
-
 .requisites {
-  margin-top: 10px;
-  color: #38333f;
-  font-size: 14px;
+  margin-top: 9px;
+
+  color: #55505f;
+  font-size: 13px;
   font-weight: 700;
 }
 
 .divider {
-  margin-top: 22px;
-  padding-top: 17px;
-  border-top: 1px solid var(--border);
+  margin-top: 21px;
+  padding-top: 16px;
+
+  border-top: 1px solid #d3cee5;
 }
 
 .back {
+  min-height: 44px;
   margin-top: 22px;
-  padding: 11px 15px;
-  background: var(--white);
-  font-size: 15px;
+  padding: 10px 19px;
+
+  border: 0;
+  border-radius: 22px;
+
+  background: #A49BFF;
+  color: #292733;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  transition: background-color .2s ease;
+}
+
+.back:hover {
+  background: #968CF4;
 }
 
 @keyframes turn {
@@ -161,12 +179,8 @@ button {
 }
 
 @media (max-width: 600px) {
-  body {
-    padding: 14px;
-  }
-
   .card {
-    padding: 20px;
+    padding: 23px 21px;
   }
 
   .choices {
@@ -174,11 +188,15 @@ button {
   }
 
   h2 {
-    font-size: 23px;
+    font-size: 20px;
   }
 
   h3 {
-    font-size: 20px;
+    font-size: 19px;
+  }
+
+  p {
+    font-size: 14px;
   }
 }
 
@@ -192,15 +210,26 @@ button {
 
 <body>
 
-<main class="interactive" id="interactive" aria-live="polite"></main>
+<main
+  class="interactive"
+  id="interactive"
+  aria-live="polite">
+</main>
 
 <script>
 const root = document.getElementById('interactive');
 
-const front = `
-<section class="card front">
 
-  <h2>Переписку зафиксировали у нотариуса?</h2>
+const front = `
+<section class="card">
+
+  <p class="kicker">
+    Выберите свою ситуацию
+  </p>
+
+  <h2>
+    Переписку зафиксировали у нотариуса?
+  </h2>
 
   <p class="intro">
     Нажмите на вариант, чтобы узнать о рисках.
@@ -252,7 +281,7 @@ const no = `
       доказательство.
     </p>
 
-    <p class="case">
+    <p>
       <strong>Из практики.</strong>
       Суд признал фотографии экрана программы недопустимыми
       доказательствами: на них не было даты и точного времени,
@@ -282,7 +311,7 @@ const no = `
       дополнительный риск.
     </p>
 
-    <p class="case">
+    <p>
       <strong>Из практики.</strong>
       Суд не принял скриншоты переписки, поскольку отсутствие
       нотариального заверения не позволяло убедиться, что
@@ -408,7 +437,6 @@ function render(html) {
       render(front);
     });
   }
-
 }
 
 render(front);
